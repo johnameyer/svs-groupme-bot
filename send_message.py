@@ -16,7 +16,7 @@ from keys import *
 group = r.get(group_get_url + str(group_id) + '?token=' + token).json()
 
 users = {user['user_id']:user for user in group['response']['members']}
-output = sub.run(['./get_todays.sh'], stdout=sub.PIPE).stdout.decode('utf-8')
+output = sub.check_output(['./get_todays.sh']).decode('utf-8')
 #output = "40991635 16407411"
 users = list(map(lambda a: users[a], output.split()))
 
@@ -42,7 +42,7 @@ attachment['user_ids'] = user_ids
 
 body['attachments'] = [attachment]
 body['text'] = text
-body['bot_id'] = test_bot_id
+body['bot_id'] = bot_id
 
 print(json.dumps(body))
 r.post('https://api.groupme.com/v3/bots/post', json.dumps(body))
